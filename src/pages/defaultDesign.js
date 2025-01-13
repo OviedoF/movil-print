@@ -1,0 +1,133 @@
+export default {
+    "texts": [
+        {
+            "text": "TEST",
+            "size": 34,
+            "color": "#100f0f",
+            "font": "Arial",
+            "weight": "normal",
+            "italic": false,
+            "underline": false,
+            "x": 139,
+            "y": 313.5,
+            "width": 100,
+            "height": 30,
+            "rotation": 0,
+            "id": "8f0f4fb1-7784-4a5c-9db6-f73049e0e22a",
+            "zIndex": 105,
+            "type": "texts"
+        },
+        {
+            "text": "TEST",
+            "size": 34,
+            "color": "#100f0f",
+            "font": "Arial",
+            "weight": "normal",
+            "italic": false,
+            "underline": false,
+            "x": 264,
+            "y": 440.5,
+            "width": 100,
+            "height": 30,
+            "rotation": 0,
+            "id": "c31c2dfc-f36a-4630-b02f-632b28a1872d",
+            "zIndex": 106,
+            "type": "texts"
+        },
+        {
+            "text": "TEST",
+            "size": 34,
+            "color": "#100f0f",
+            "font": "Arial",
+            "weight": "normal",
+            "italic": false,
+            "underline": false,
+            "x": 141,
+            "y": 597.5,
+            "width": 100,
+            "height": 30,
+            "rotation": 0,
+            "id": "9618a839-ee92-431f-80e4-5f04818c6a23",
+            "zIndex": 107,
+            "type": "texts"
+        },
+        {
+            "text": "TEST",
+            "size": 34,
+            "color": "#100f0f",
+            "font": "Arial",
+            "weight": "normal",
+            "italic": false,
+            "underline": false,
+            "x": 20,
+            "y": 449.5,
+            "width": 100,
+            "height": 30,
+            "rotation": -55.041136185098736,
+            "id": "3ae96068-ee33-48fa-9b0f-41c1bf206558",
+            "zIndex": 108,
+            "type": "texts"
+        }
+    ],
+    "images": [],
+    "items": [
+        {
+            "element": "/mocks/forma2.webp",
+            "x": 95,
+            "y": 381.5,
+            "width": 183,
+            "height": 196,
+            "rotation": 0,
+            "id": "a56ebf98-4249-4f09-8177-59da99d5e964",
+            "zIndex": 101,
+            "type": "items"
+        },
+        {
+            "element": "/mocks/forma1.webp",
+            "x": 30,
+            "y": 304.5,
+            "width": 74,
+            "height": 63,
+            "rotation": 0,
+            "id": "6054f189-505b-4149-9c25-8c9038bbe256",
+            "zIndex": 101,
+            "type": "items",
+            "rotate": 234.558577101955
+        },
+        {
+            "element": "/mocks/forma1.webp",
+            "x": 289,
+            "y": 289.5,
+            "width": 100,
+            "height": 100,
+            "rotation": 0,
+            "id": "9190e388-18e2-4aa8-b730-3f68fc83999e",
+            "zIndex": 102,
+            "type": "items"
+        },
+        {
+            "element": "/mocks/forma1.webp",
+            "x": 259,
+            "y": 591.5,
+            "width": 61,
+            "height": 55,
+            "rotation": 0,
+            "id": "5ce54ebe-4d1c-4e77-b876-ea6ae0f27497",
+            "zIndex": 103,
+            "type": "items",
+            "rotate": 234.558577101955
+        },
+        {
+            "element": "/mocks/forma1.webp",
+            "x": 48,
+            "y": 591.5,
+            "width": 61,
+            "height": 50,
+            "rotation": 0,
+            "id": "fe99bad5-812f-49f0-8f1d-51f33437ffe1",
+            "zIndex": 104,
+            "type": "items",
+            "rotate": 34.5085229876684
+        }
+    ]
+}

@@ -1,0 +1,99 @@
+.main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #FEFEFE;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.templateGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.templateCard {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-size: cover;
+    background-position: center;
+    transform: scale(1);
+    animation: popIn 0.5s ease-in-out;
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.selectedCard {
+    border: 2px solid #4CAF50;
+    transform: scale(1.1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.templateImage {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    z-index: 99;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.templateInfo {
+    padding: 1rem;
+    opacity: 0;
+    animation: fadeInText 0.8s ease-in-out forwards;
+}
+
+.templateName {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInText {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0.8;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

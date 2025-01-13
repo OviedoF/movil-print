@@ -1,0 +1,74 @@
+.sceneElement {
+    position: absolute;
+    transition: none;
+    cursor: move;
+    user-select: none;
+
+    &.dragging {
+        pointer-events: none;
+    }
+
+    &.selected {
+        outline: 2px solid #007bff;
+    }
+}
+
+.options{
+    position: absolute;
+    top: -40px;
+    left: 0;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+
+    .actionButton {
+        width: 25px;
+        height: 25px;
+        padding: 7px;
+        border-radius: 20px;
+        background: #007bff30;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    
+        &:active {
+            cursor: grabbing;
+        }
+    }
+}
+
+.resizeHandle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: 1px solid #007bff;
+    background: #007bff30;
+
+    &.topLeft {
+        top: -10px;
+        left: -10px;
+        cursor: nwse-resize;
+    }
+
+    &.topRight {
+        top: -10px;
+        right: -10px;
+        cursor: nesw-resize;
+    }
+
+    &.bottomLeft {
+        bottom: -10px;
+        left: -10px;
+        cursor: nesw-resize;
+    }
+
+    &.bottomRight {
+        bottom: -10px;
+        right: -10px;
+        cursor: nwse-resize;
+    }
+}
+

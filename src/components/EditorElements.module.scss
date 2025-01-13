@@ -1,0 +1,195 @@
+.items{
+    background-color: #333;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    height: 30vh;
+    width: 95vw;
+    bottom: 0;
+    left: 2.5vw;
+    position: absolute;
+    z-index: 2;
+    transition: all .5s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+
+    .options{
+        display: flex;
+
+        .option{
+            background-color: transparent;
+            color: white;
+            padding: 10px 30px;
+            cursor: pointer;
+            transition: all .5s;
+            border: none;
+            font-size: 1.5rem;
+
+            &.active{
+                color: #333;
+                background-color: #fefefe;
+
+                &:hover{
+                    background-color: #ddd;
+                }
+            }
+
+            &:hover{
+                background-color: #777;
+            }
+        }
+    }
+
+    .toggle{
+        position: absolute;
+        width: 50px;
+        background-color: #333;
+        border: none;
+        padding: 2px 0;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        left: calc(50% - 25px);
+        top: -23px;
+        cursor: pointer;
+        transition: all .5s;
+
+        &:hover{
+            background-color: #555;
+        }
+    }
+
+    &.inactive{
+       height: 0vh;
+    }
+}
+
+.elements{
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    img{
+        width: 120px;
+        height: 120px;
+        border: 1px solid #333;
+        cursor: pointer;
+        transition: all .5s;
+        object-fit: contain;
+
+        &:hover{
+            border: 1px solid #777;
+        }
+    }
+}
+
+.text{
+    width: 100%;
+    height: 75%;
+    display: flex;
+    align-items: center;
+
+    textarea{
+        width: 50%;
+        height: 100%;
+        background-color: #fefefe30;
+        color: white;
+        border: 1px solid #ffffff40;
+        border-radius: 5px;
+        font-size: 1.5rem;
+        resize: none;
+        font-family: 'Roboto', sans-serif;
+        padding: 10px;
+    }
+
+    .controls{
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        padding: 20px;
+
+        .settings{
+            display: flex;
+            width: 100%;
+            font-size: 28px;
+
+            li{
+                margin-right: 30px;
+                display: flex;
+                align-items: center;
+
+                button {
+                    background-color: #555;
+                    padding: 0 10px;
+                    border-radius: 5px;
+                    border: none;
+                    color: white;
+                    font-size: 1.5rem;
+                    margin: 0 16px;
+                    cursor: pointer;
+                    transition: all .5s;
+
+                    &:hover{
+                        background-color: #777;
+                    }
+                }
+            }
+        }
+
+        .design{
+            display: flex;
+            width: 100%;
+            font-size: 28px;
+
+            li{
+                display: flex;
+                align-items: center;
+                margin-right: 20px;
+
+                input{
+                    height: 100%;
+                    background-color: transparent;
+                    border: none;
+                    padding: 0;
+                }
+
+                button {
+                    background-color: #555;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 5px;
+                    border: none;
+                    color: white;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    transition: all .5s;
+
+                    &:hover{
+                        background-color: #777;
+                    }
+                }
+            }
+        }
+    }
+
+    .add{
+        background-color: #555;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all .5s;
+
+        &:hover{
+            background-color: #777;
+        }
+    }
+}

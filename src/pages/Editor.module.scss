@@ -1,0 +1,27 @@
+.editor{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .5s;
+
+    &.full{
+        height: 100vh;
+    }
+
+    .background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        user-select: none;
+    }
+
+    .scene{
+        z-index: 2;
+        border: 1px solid #33333320;
+        position: relative;
+    }
+}
