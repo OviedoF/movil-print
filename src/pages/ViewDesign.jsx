@@ -89,7 +89,7 @@ export default function ViewDesign() {
         <img src={template.background} alt={template.name} className={styles.background} />
 
         <div className={styles.scene} ref={scene}>
-          <img src={template.scene} alt={template.name} className={styles.sceneImage} />
+          <img src={template.scene} alt={template.name} className={styles.sceneImage} id={styles.sceneBg} />
 
           {design.items.map((item, index) => <SceneElement
             key={index}
