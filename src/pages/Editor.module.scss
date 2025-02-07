@@ -23,13 +23,12 @@
         z-index: 2;
         border: 1px solid #33333320;
         position: relative;
-        max-height: 98vh;
-        max-width: 98vh;
+        max-height: 95vh;
+        max-width: 95vw;
 
-        img {
-            max-height: 98vh;
-            max-width: 98vh;
-            object-fit: contain;
+        #sceneBg {
+            max-height: 95vh;
+            max-width: 95vw;
         }
     }
 }
