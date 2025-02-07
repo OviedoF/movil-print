@@ -27,6 +27,12 @@ export default function SceneElement({
         if (rotator.current) {
             rotator.current.style.transform = `rotate(${rotate}deg)`;
         }
+
+        window.addEventListener('click', (e) => {
+            if (object.current && !object.current.contains(e.target)) {
+                setObjectSelected(null);
+            }
+        });
     }, [rotate]);
 
     useEffect(() => {

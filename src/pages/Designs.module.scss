@@ -1,0 +1,101 @@
+.container {
+    min-height: 100vh;
+    background-color: #333333;
+    padding: 1.5rem;
+  }
+
+  .buttonDelete{
+    background-color: #E74C3C;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+    
+    &:hover {
+      background-color: #CC0000;
+    }
+  }
+  
+  .tableWrapper {
+    max-width: 48rem;
+    margin: 0 auto;
+    background-color: rgba(102, 102, 102, 0.8);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+  }
+  
+  .table {
+    width: 100%;
+  }
+  
+  .headerCell {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+  }
+  
+  .headerCellRight {
+    @extend .headerCell;
+    text-align: right;
+  }
+  
+  .tableRow {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s;
+  
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+  
+  .cell {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: white;
+  }
+  
+  .cellRight {
+    @extend .cell;
+    text-align: right;
+  }
+  
+  .actionButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    color: white;
+    transition: background-color 0.2s;
+  
+    &:hover {
+      background-color: #0088FF;
+    }
+  }
+  
+  .icon {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+  }
+  
+  .srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+    

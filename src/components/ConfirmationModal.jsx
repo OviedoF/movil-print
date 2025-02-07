@@ -1,18 +1,20 @@
 import React from 'react';
 import styles from './ConfirmationModal.module.scss';
-import {useDataContext} from '../context/data.context';
+import { useDataContext } from '../context/data.context';
 
 const ConfirmationModal = ({
   confirmText = 'Confirmar',
-  cancelText = 'Cancelar'
+  cancelText = 'Cancelar',
+  children
 }) => {
   const { confirmationModal, setConfirmationModal } = useDataContext();
+  console.log(confirmationModal);
 
   const closeModal = () => setConfirmationModal({
     isOpen: false,
     title: '',
     message: '',
-    handleConfirm: () => {}
+    handleConfirm: () => { }
   });
 
   const onConfirm = () => {
@@ -27,10 +29,15 @@ const ConfirmationModal = ({
           <div className={styles.modalContent}>
             <h2 className={styles.modalTitle}>{confirmationModal.title}</h2>
             <p className={styles.modalMessage}>{confirmationModal.message}</p>
-            <div className={styles.modalActions}>
-              <button className={styles.cancelButton} onClick={closeModal}>{cancelText}</button>
-              <button className={styles.confirmButton} onClick={onConfirm}>{confirmText}</button>
-            </div>
+
+            <form className={styles.modalForm} onSubmit={onConfirm}>
+              {children && children}
+
+              <div className={styles.modalActions}>
+                <button className={styles.cancelButton} onClick={closeModal} type='button'>{cancelText}</button>
+                <button className={styles.confirmButton} type='submit'>{confirmText}</button>
+              </div>
+            </form>
           </div>
         </div>
       )}

@@ -11,6 +11,7 @@ import ConfirmationModal from '../components/ConfirmationModal';
 export default function Editor() {
   const [optionsActive, setOptionsActive] = useState(true);
   const [design, setDesign] = useState({
+    name: '',
     items: [],
     images: [],
     texts: []
@@ -18,7 +19,6 @@ export default function Editor() {
   const [objectSelected, setObjectSelected] = useState(null);
   const { templates } = useDataContext()
   const name = useParams().name;
-  console.log(design)
   const template = templates.find(template => template.name === name) || {};
   const scene = useRef();
 
@@ -27,7 +27,7 @@ export default function Editor() {
       <section className={
         `${styles.editor} ${!optionsActive && styles.full}`
       }>
-        <Controls objectSelected={objectSelected} setObjectSelected={setObjectSelected} setDesign={setDesign} design={design} />
+        <Controls objectSelected={objectSelected} setObjectSelected={setObjectSelected} setDesign={setDesign} design={design} scene={template} />
 
         <img src={template.background} alt={template.name} className={styles.background} />
 
@@ -80,7 +80,15 @@ export default function Editor() {
         scene={scene}
       />
 
-      <ConfirmationModal />
+      <ConfirmationModal>
+        <div className={styles.designName}>
+          <label htmlFor="design-name">Nombre del diseño</label>
+          <input type="text" id="design-name" value={design.name} onChange={e => setDesign({
+            ...design,
+            name: e.target.value
+          })} required />
+        </div>
+      </ConfirmationModal>
     </main>
   )
 }

@@ -4,12 +4,14 @@ import { FaCopy, FaFile, FaPaste } from 'react-icons/fa';
 import { useSnackbar } from 'notistack';
 import { v4 } from 'uuid';
 import { useDataContext } from '../context/data.context';
+import { makeQuery } from '../utils/api';
 
 export default function Controls({
     objectSelected,
     setObjectSelected,
     design,
     setDesign,
+    scene
 }) {
     const [copied, setCopied] = useState(null);
     const { setConfirmationModal } = useDataContext();
@@ -79,13 +81,26 @@ export default function Controls({
             title: 'Enviar diseño',
             message: '¿Estás seguro de enviar el diseño?',
             handleConfirm: () => {
-                setDesign({
-                    texts: [],
-                    images: [],
-                    items: []
-                });
-                setObjectSelected(null);
-                enqueueSnackbar('Diseño enviado', { variant: 'success' });
+                console.log(design)
+                makeQuery(
+                    localStorage.getItem('token'),
+                    'createDesign',
+                    {
+                        ...design,
+                        template: scene
+                    },
+                    enqueueSnackbar,
+                    () => {
+                        setDesign({
+                            name: '',
+                            texts: [],
+                            images: [],
+                            items: []
+                        });
+                        setObjectSelected(null);
+                        enqueueSnackbar('Diseño enviado', { variant: 'success' });
+                    }
+                )
             }
         });
     }

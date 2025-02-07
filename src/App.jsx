@@ -8,6 +8,8 @@ import LoginPage from './pages/LoginPage'
 import TemplateManager from './pages/TemplateManager'
 import ViewDesign from './pages/ViewDesign'
 import { SnackbarProvider } from 'notistack'
+import DisableZoom from './utils/DisableZoom'
+import Designs from './pages/Designs'
 
 function App() {
   const router = createBrowserRouter([
@@ -28,8 +30,12 @@ function App() {
       element: <TemplateManager />
     },
     {
-      path: '/view/:name',
+      path: '/design/:id',
       element: <ViewDesign />
+    },
+    {
+      path: '/designs',
+      element: <Designs />
     }
   ])
 
@@ -40,6 +46,8 @@ function App() {
           <RouterProvider router={router} />
         </SnackbarProvider>
       </DataContext>
+
+      <DisableZoom />
     </React.StrictMode>
   )
 }

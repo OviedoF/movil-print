@@ -169,6 +169,7 @@ function Text({ design, setDesign, scene }) {
 export default function EditorElements({ active, setOptionsActive, optionsActive, template, design, setDesign, scene }) {
     const [menuOpen, setMenuOpen] = useState('elements')
     const { setTextForm } = useDataContext()
+    console.log('template', template)
 
     const toggleOptions = () => setOptionsActive(!optionsActive)
 
@@ -188,7 +189,7 @@ export default function EditorElements({ active, setOptionsActive, optionsActive
         })
     }, [optionsActive])
 
-    return (
+    if(template.name) return (
         <section className={
             `${styles.items} ${active ? styles.active : styles.inactive
             }`
@@ -231,7 +232,7 @@ export default function EditorElements({ active, setOptionsActive, optionsActive
                 />}
 
                 {menuOpen === 'images' && <Elements
-                    elements={template.objects}
+                    elements={template.elements}
                     design={design}
                     setDesign={setDesign}
                     scene={scene}

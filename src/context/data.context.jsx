@@ -1,30 +1,11 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { makeQuery } from "../../src/utils/api";
+import { enqueueSnackbar } from "notistack";
 
 export const dataContext = createContext({});
 
-const defaultTemplates = [
-    {
-        _id: 1,
-        name: 'Template 1',
-        scene: '/mocks/bolsa.png',
-        background: '/mocks/palmeras_fondo.jpg',
-        objects: [
-            '/mocks/palmeras_1.webp',
-            '/mocks/palmeras_2.png',
-            '/mocks/palmeras_3.webp',
-        ],
-        sceneDimensions: { width: 25, height: 25 },
-        shapes: [
-            '/mocks/forma1.webp',
-            '/mocks/forma2.webp',
-            '/mocks/forma3.webp',
-            '/mocks/forma4.png',
-        ],
-    }
-];
-
 export default function DataContext({ children = null }) {
-    const [templates, setTemplates] = useState(defaultTemplates);
+    const [templates, setTemplates] = useState([]);
     const [textForm, setTextForm] = useState({
         text: '',
         size: 12,
@@ -40,6 +21,21 @@ export default function DataContext({ children = null }) {
         message: '',
         handleConfirm: () => { }
     });
+
+    const getTemplates = () => {
+        makeQuery(
+            localStorage.getItem('token'),
+            'getTemplates',
+            null,
+            enqueueSnackbar,
+            (data) => setTemplates(data),
+            null,
+        )
+    }
+
+    useEffect (() => {
+        getTemplates();
+    }, []);
 
     return (
         <dataContext.Provider value={{

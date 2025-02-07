@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import styles from './LoginPage.module.scss';
 import { useSnackbar } from 'notistack';
 import { useNavigate, useNavigation } from 'react-router-dom';
+import { makeQuery } from '../utils/api';
+import ReplaceOnLoading from '../utils/ReplaceOnLoading';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const validateForm = () => {
     const newErrors = {};
@@ -28,24 +30,27 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      setIsLoading(true);
-      try {
-        if (email === "templates@gmail.com" && password === "123456") {
-          navigate('/manage-templates');
-          return enqueueSnackbar('Bienvenido', { variant: 'success' });
-        }
+    e.preventDefault()
 
-        setErrors({ form: 'Usuario o contraseña incorrectos' });
-      } catch (error) {
-        console.error(error);
-        setErrors({ form: 'Error al iniciar sesión. Por favor, intenta de nuevo.' });
-      } finally {
-        setIsLoading(false);
-      }
+    if (validateForm()) {
+      await makeQuery(
+        null,
+        'login',
+        { email, password },
+        enqueueSnackbar,
+        (data) => {
+          localStorage.setItem('token', data.token)
+          enqueueSnackbar('Ingresaste correctamente.', { variant: 'success' })
+          if (data.role === "admin") return navigate('/manage-templates')
+          if (data.role === "moderator") return navigate('/designs')
+        },
+        setIsLoading,
+        (error) => {
+          console.log(error)
+        }
+      )
     }
-  };
+  }
 
   return (
     <div className={styles.loginPage}>
@@ -77,9 +82,11 @@ const LoginPage = () => {
             {errors.password && <span className={styles.error}>{errors.password}</span>}
           </div>
           {errors.form && <div className={styles.formError}>{errors.form}</div>}
-          <button type="submit" className={styles.button} disabled={isLoading}>
-            {isLoading ? 'Cargando...' : 'Iniciar Sesión'}
-          </button>
+          <ReplaceOnLoading loading={isLoading}>
+            <button type="submit" className={styles.button} disabled={isLoading}>
+              {isLoading ? 'Cargando...' : 'Iniciar Sesión'}
+            </button>
+          </ReplaceOnLoading>
         </form>
       </div>
     </div>

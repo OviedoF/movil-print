@@ -3,17 +3,29 @@ import styles from './TemplateManager.module.scss';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useDataContext } from '../context/data.context';
 import { useNavigate } from 'react-router-dom';
+import { makeQuery } from '../utils/api';
+import { useSnackbar } from 'notistack';
+import ReplaceOnLoading from '../utils/ReplaceOnLoading';
 
 const TemplateManager = () => {
   const { templates, setTemplates } = useDataContext();
   const [currentTemplate, setCurrentTemplate] = useState({
     name: '',
     scene: '',
-    sceneDimensions: { width: 0, height: 0 },
+    width: 0,
+    height: 0,
     background: '',
-    objects: [],
+    elements: [],
     shapes: []
   });
+  const [images, setImages] = useState({
+    scene: '',
+    background: '',
+    elements: [],
+    shapes: []
+  });
+  const [loading, setLoading] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 
@@ -25,6 +37,10 @@ const TemplateManager = () => {
         setCurrentTemplate(prev => ({
           ...prev,
           [field]: reader.result
+        }));
+        setImages(prev => ({
+          ...prev,
+          [field]: e.target.files[0]
         }));
       };
       reader.readAsDataURL(file);
@@ -45,39 +61,77 @@ const TemplateManager = () => {
         ...prev,
         [field]: results
       }));
-    });
-  };
 
-  const handleDimensionChange = (dimension, value) => {
-    setCurrentTemplate(prev => ({
-      ...prev,
-      sceneDimensions: {
-        ...prev.sceneDimensions,
-        [dimension]: parseFloat(value) || 0
-      }
-    }));
+      setImages(prev => ({
+        ...prev,
+        [field]: files
+      }));
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const templateToSave = {
-      ...currentTemplate,
-      sceneDimensions: currentTemplate.sceneDimensions || { width: 0, height: 0 }
-    };
-    if (isEditing) {
-      setTemplates(templates.map(t => t._id === templateToSave._id ? templateToSave : t));
-    } else {
-      setTemplates([...templates, { ...templateToSave, _id: Date.now() }]);
-    }
-    setCurrentTemplate({
-      name: '',
-      scene: '',
-      sceneDimensions: { width: 0, height: 0 },
-      background: '',
-      objects: [],
-      shapes: []
+    const formData = new FormData();
+    formData.append('name', currentTemplate.name);
+    formData.append('scene', images.scene);
+    formData.append('width', currentTemplate.width);
+    formData.append('height', currentTemplate.height);
+    formData.append('background', images.background);
+    images.elements.forEach((obj, index) => {
+      formData.append(`elements`, obj);
     });
-    setIsEditing(false);
+    images.shapes.forEach((shape, index) => {
+      formData.append(`shapes`, shape);
+    });
+
+    if (!isEditing) {
+      makeQuery(
+        localStorage.getItem('token'),
+        'createTemplate',
+        formData,
+        enqueueSnackbar,
+        (res) => {
+          enqueueSnackbar('Template creado correctamente', { variant: 'success' });
+          setTemplates([...templates, res]);
+          setCurrentTemplate({
+            name: '',
+            scene: '',
+            width: 0,
+            height: 0,
+            background: '',
+            elements: [],
+            shapes: []
+          });
+          setIsEditing(false);
+        },
+        setLoading
+      )
+    } else {
+      makeQuery(
+        localStorage.getItem('token'),
+        'editTemplate',
+        {
+          form: formData,
+          id: currentTemplate._id
+        },
+        enqueueSnackbar,
+        (res) => {
+          enqueueSnackbar('Template actualizado correctamente', { variant: 'success' });
+          setTemplates(templates.map(t => t._id === res._id ? res : t));
+          setCurrentTemplate({
+            name: '',
+            scene: '',
+            width: 0,
+            height: 0,
+            background: '',
+            elements: [],
+            shapes: []
+          });
+          setIsEditing(false);
+        },
+        setLoading
+      )
+    }
   };
 
   const handleEdit = (template) => {
@@ -86,11 +140,29 @@ const TemplateManager = () => {
   };
 
   const handleDelete = (id) => {
-    setTemplates(templates.filter(t => t._id !== id));
+    makeQuery(
+      localStorage.getItem('token'),
+      'deleteTemplate',
+      id,
+      enqueueSnackbar,
+      (res) => {
+        enqueueSnackbar('Template eliminado correctamente', { variant: 'success' });
+        setTemplates(templates.filter(t => t._id !== id));
+      },
+      setLoading
+    );
   };
 
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      navigate('/login');
+    } else {
+      setLoading(false);
+    }
+  }, [navigate]);
+
   return (
-    <>
+    <ReplaceOnLoading loading={loading}>
       <button onClick={() => navigate('/')} className={styles.backButton}>
         Ir a templates
       </button>
@@ -116,12 +188,10 @@ const TemplateManager = () => {
                 <td>{template.name}</td>
                 <td><img src={template.scene} alt="Scene" className={styles.previewImage} /></td>
                 <td>
-                  {template.sceneDimensions ?
-                    `${template.sceneDimensions.width} x ${template.sceneDimensions.height} cm` :
-                    'N/A'}
+                  `${template.width} x ${template.height} cm`
                 </td>
                 <td><img src={template.background} alt="Background" className={styles.previewImage} /></td>
-                <td>{template.objects.length} objetos</td>
+                <td>{template.elements.length} objetos</td>
                 <td>{template.shapes.length} formas</td>
                 <td>
                   <button onClick={() => handleEdit(template)} className={styles.editButton}>
@@ -170,8 +240,8 @@ const TemplateManager = () => {
                 id="width"
                 min="0"
                 step="0.1"
-                value={currentTemplate.sceneDimensions?.width || ''}
-                onChange={(e) => handleDimensionChange('width', e.target.value)}
+                value={currentTemplate.width || ''}
+                onChange={(e) => setCurrentTemplate({ ...currentTemplate, width: e.target.value })}
                 required
               />
             </div>
@@ -182,8 +252,8 @@ const TemplateManager = () => {
                 id="height"
                 min="0"
                 step="0.1"
-                value={currentTemplate.sceneDimensions?.height || ''}
-                onChange={(e) => handleDimensionChange('height', e.target.value)}
+                value={currentTemplate.height || ''}
+                onChange={(e) => setCurrentTemplate({ ...currentTemplate, height: e.target.value })}
                 required
               />
             </div>
@@ -203,16 +273,16 @@ const TemplateManager = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="objects">Objetos:</label>
+            <label htmlFor="elements">Objetos:</label>
             <input
               type="file"
-              id="objects"
-              onChange={(e) => handleMultipleFileChange(e, 'objects')}
+              id="elements"
+              onChange={(e) => handleMultipleFileChange(e, 'elements')}
               accept="image/*"
               multiple
             />
             <div className={styles.previewContainer}>
-              {currentTemplate?.objects?.map((obj, index) => (
+              {currentTemplate?.elements?.map((obj, index) => (
                 <img key={index} src={obj} alt={`Object ${index + 1}`} className={styles.previewImage} />
               ))}
             </div>
@@ -239,7 +309,7 @@ const TemplateManager = () => {
           </button>
         </form>
       </div>
-    </>
+    </ReplaceOnLoading>
   );
 };
 
