@@ -31,8 +31,10 @@ export default function Editor() {
 
         <img src={template.background} alt={template.name} className={styles.background} />
 
-        <div className={styles.scene} ref={scene}>
-          <img src={template.scene} alt={template.name} id={styles.sceneBg} />
+        <div className={styles.scene} ref={scene} style={{
+          width: `${template.width}cm`,
+          height: `${template.height}cm`
+        }}>
 
           {design.items.map((item, index) => <SceneElement
             key={index}

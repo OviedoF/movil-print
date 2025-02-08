@@ -18,7 +18,6 @@ export default function TemplateSelect() {
                         style={{ backgroundImage: `url(${template.background})` }}
                         onClick={() => setSelectedTemplate(template._id)}
                     >
-                        <img src={template.scene} alt={template.name} className={styles.templateImage} />
                         <div className={styles.templateInfo}>
                             <h2 className={styles.templateName}>{template.name}</h2>
                         </div>

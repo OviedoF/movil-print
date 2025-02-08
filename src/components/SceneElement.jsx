@@ -131,6 +131,20 @@ export default function SceneElement({
             }
 
             setSize({ width: newWidth, height: newHeight });
+            setDesign((prev) => ({
+                ...prev,
+                [designKey]: prev[designKey].map((item) => {
+                    if (item.id === element.id) {
+                        return {
+                            ...item,
+                            width: newWidth,
+                            height: newHeight,
+                        };
+                    }
+                    return item;
+                }
+                ),
+            }));
             setPosition({ x: newXPos, y: newYPos });
         };
 

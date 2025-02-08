@@ -73,7 +73,6 @@ const TemplateManager = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('name', currentTemplate.name);
-    formData.append('scene', images.scene);
     formData.append('width', currentTemplate.width);
     formData.append('height', currentTemplate.height);
     formData.append('background', images.background);
@@ -174,7 +173,6 @@ const TemplateManager = () => {
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Escena</th>
               <th>Medidas (cm)</th>
               <th>Fondo</th>
               <th>Objetos</th>
@@ -186,7 +184,6 @@ const TemplateManager = () => {
             {templates.map(template => (
               <tr key={template._id}>
                 <td>{template.name}</td>
-                <td><img src={template.scene} alt="Scene" className={styles.previewImage} /></td>
                 <td>
                   `${template.width} x ${template.height} cm`
                 </td>
@@ -217,19 +214,6 @@ const TemplateManager = () => {
               onChange={(e) => setCurrentTemplate({ ...currentTemplate, name: e.target.value })}
               required
             />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="scene">Escena:</label>
-            <input
-              type="file"
-              id="scene"
-              onChange={(e) => handleFileChange(e, 'scene')}
-              accept="image/*"
-            />
-            {currentTemplate?.scene && (
-              <img src={currentTemplate.scene} alt="Scene Preview" className={styles.previewImage} />
-            )}
           </div>
 
           <div className={styles.dimensionsGroup}>

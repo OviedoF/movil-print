@@ -8,7 +8,6 @@ const ConfirmationModal = ({
   children
 }) => {
   const { confirmationModal, setConfirmationModal } = useDataContext();
-  console.log(confirmationModal);
 
   const closeModal = () => setConfirmationModal({
     isOpen: false,
