@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useDataContext } from '../context/data.context';
 import { useParams } from 'react-router-dom';
 import styles from './ViewDesign.module.scss';
 import SceneElement from '../components/SceneElement';
 import SceneTextElement from '../components/SceneText';
 import ConfirmationModal from '../components/ConfirmationModal';
-import defaultDesign from './defaultDesign';
 import { makeQuery } from '../utils/api';
 import { useSnackbar } from 'notistack';
 
@@ -17,10 +15,6 @@ export default function ViewDesign() {
     texts: []
   });
   const [template, setTemplate] = useState({});
-  const [multiplierForCMS, setMultiplierForCMS] = useState({
-    width: 1,
-    height: 1
-  });
   const [objectSelected, setObjectSelected] = useState(null);
   const id = useParams().id;
   const scene = useRef();
@@ -39,41 +33,9 @@ export default function ViewDesign() {
     )
   }
 
-  const getMultiplierForCMS = () => {
-    if (!scene.current || !template.width || !template.height) return;
-
-    const sceneWidth = scene.current.offsetWidth; // PX
-    const sceneHeight = scene.current.offsetHeight; // PX
-
-    const templateWidthCM = template.width; // CM
-    const templateHeightCM = template.height; // CM
-
-    const templateWidthPX = templateWidthCM * 37.795276;
-    const templateHeightPX = templateHeightCM * 37.795276;
-
-    const multiplierWidth = templateWidthPX / sceneWidth;
-    const multiplierHeight = templateHeightPX / sceneHeight;
-
-    setMultiplierForCMS({
-      width: multiplierWidth,
-      height: multiplierHeight
-    });
-  };
-
   useEffect(() => {
     getDesign();
   }, []);
-
-  useEffect(() => {
-    if (template.width && template.height) {
-      getMultiplierForCMS();
-
-      document.documentElement.style.setProperty('--template-width', template.width);
-      document.documentElement.style.setProperty('--template-height', template.height);
-      document.documentElement.style.setProperty('--multiplier-width', multiplierForCMS.width);
-      document.documentElement.style.setProperty('--multiplier-height', multiplierForCMS.height);
-    }
-  }, [template, multiplierForCMS]);
 
   return (
     <main>

@@ -16,6 +16,7 @@ export default function Controls({
     const [copied, setCopied] = useState(null);
     const { setConfirmationModal } = useDataContext();
     const { enqueueSnackbar } = useSnackbar();
+    console.log('controls design', design)
 
     const handleCopy = () => {
         if (objectSelected) {
@@ -81,11 +82,11 @@ export default function Controls({
             title: 'Enviar diseño',
             message: '¿Estás seguro de enviar el diseño?',
             handleConfirm: () => {
-                console.log(design)
                 makeQuery(
                     localStorage.getItem('token'),
                     'createDesign',
                     {
+                        name: design.name,
                         ...design,
                         template: scene
                     },

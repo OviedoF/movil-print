@@ -38,6 +38,7 @@ export default function Editor() {
 
           {design.items.map((item, index) => <SceneElement
             key={index}
+            index={index}
             element={item}
             scene={scene}
             design={design}
@@ -49,6 +50,7 @@ export default function Editor() {
 
           {design.images.map((image, index) => <SceneElement
             key={index}
+            index={index}
             element={image}
             scene={scene}
             design={design}

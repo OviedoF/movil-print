@@ -14,14 +14,14 @@ export default function SceneElement({
     objectSelected,
     setObjectSelected,
 }) {
-    const [position, setPosition] = useState({ x: element.x, y: element.y });
-    const [size, setSize] = useState({ width: element.width, height: element.height });
     const [rotate, setRotate] = useState(element.rotation || 0);
     const [isRotating, setIsRotating] = useState(false);
     const [resizing, setResizing] = useState(null);
     const {enqueueSnackbar} = useSnackbar();
     const object = useRef();
     const rotator = useRef();
+    const newSize = useRef({ width: element.width, height: element.height, x: element.x, y: element.y });
+
 
     useEffect(() => {
         if (rotator.current) {
@@ -86,22 +86,22 @@ export default function SceneElement({
 
         const startX = e.clientX || e.touches[0].clientX;
         const startY = e.clientY || e.touches[0].clientY;
-        const startWidth = size.width;
-        const startHeight = size.height;
-        const startXPos = position.x;
-        const startYPos = position.y;
+        const startWidth = element.width;
+        const startHeight = element.height;
+        const startXPos = element.x;
+        const startYPos = element.y;
 
         const sceneRect = scene.current.getBoundingClientRect();
 
         const onMouseMove = (e) => {
             const deltaX = (e.clientX || e.touches[0].clientX) - startX;
             const deltaY = (e.clientY || e.touches[0].clientY) - startY;
-
+        
             let newWidth = startWidth;
             let newHeight = startHeight;
             let newXPos = startXPos;
             let newYPos = startYPos;
-
+        
             if (direction.includes('right')) {
                 newWidth = Math.min(Math.max(startWidth + deltaX, 50), sceneRect.width - startXPos);
             }
@@ -109,44 +109,24 @@ export default function SceneElement({
                 newHeight = Math.min(Math.max(startHeight + deltaY, 50), sceneRect.height - startYPos);
             }
             if (direction.includes('left')) {
-                const maxDeltaX = startXPos + startWidth - 50; // Limita cuánto puede reducirse el ancho
-                if (deltaX > maxDeltaX) {
-                    console.log(deltaX, maxDeltaX);
-                    newWidth = 50; // Mínimo ancho permitido
-                    newXPos = sceneRect.left; // Pegado al borde izquierdo
-                } else {
-                    newWidth = Math.max(startWidth - deltaX, 50);
-                    newXPos = Math.max(startXPos + deltaX, 0); // No permite cruzar el borde izquierdo
-                }
+                newWidth = Math.max(startWidth - deltaX, 50);
+                newXPos = Math.max(startXPos + deltaX, 0);
             }
             if (direction.includes('top')) {
-                const maxDeltaY = startYPos + startHeight - 50; // Limita cuánto puede reducirse el alto
-                if (deltaY > maxDeltaY) {
-                    newHeight = 50; // Mínimo alto permitido
-                    newYPos = sceneRect.top; // Pegado al borde superior
-                } else {
-                    newHeight = Math.max(startHeight - deltaY, 50);
-                    newYPos = Math.max(startYPos + deltaY, 0); // No permite cruzar el borde superior
-                }
+                newHeight = Math.max(startHeight - deltaY, 50);
+                newYPos = Math.max(startYPos + deltaY, 0);
             }
-
-            setSize({ width: newWidth, height: newHeight });
+        
+            newSize.current = { width: newWidth, height: newHeight, x: newXPos, y: newYPos };
+        
             setDesign((prev) => ({
                 ...prev,
-                [designKey]: prev[designKey].map((item) => {
-                    if (item.id === element.id) {
-                        return {
-                            ...item,
-                            width: newWidth,
-                            height: newHeight,
-                        };
-                    }
-                    return item;
-                }
+                [designKey]: prev[designKey].map((item) =>
+                    item.id === element.id ? { ...item, width: newWidth, height: newHeight, x: newXPos, y: newYPos } : item
                 ),
             }));
-            setPosition({ x: newXPos, y: newYPos });
         };
+        
 
         const onMouseUp = () => {
             setResizing(null);
@@ -154,23 +134,15 @@ export default function SceneElement({
             window.removeEventListener('mouseup', onMouseUp);
             window.removeEventListener('touchmove', onMouseMove);
             window.removeEventListener('touchend', onMouseUp);
-
+        
             setDesign((prev) => ({
                 ...prev,
-                [designKey]: prev[designKey].map((item) => {
-                    if (item.id === element.id) {
-                        return {
-                            ...item,
-                            width: size.width,
-                            height: size.height,
-                            x: position.x,
-                            y: position.y,
-                        };
-                    }
-                    return item;
-                }),
+                [designKey]: prev[designKey].map((item) =>
+                    item.id === element.id ? { ...item, ...newSize.current } : item
+                ),
             }));
         };
+        
 
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('mouseup', onMouseUp);
@@ -180,11 +152,10 @@ export default function SceneElement({
 
     const onDragStop = (e, data) => {
         if (scene.current) {
-            if (data.x === position.x && data.y === position.y) {
+            if (data.x === element.x && data.y === element.y) {
                 return;
             }
 
-            setPosition({ x: data.x, y: data.y });
             setDesign((prev) => ({
                 ...prev,
                 [designKey]: prev[designKey].map((item) => {
@@ -254,7 +225,7 @@ export default function SceneElement({
 
     return (
         <Draggable
-            position={position}
+            position={{ x: element.x, y: element.y }}
             bounds="parent"
             onStart={(e) => e.preventDefault()}
             onStop={onDragStop}
@@ -264,12 +235,12 @@ export default function SceneElement({
                 ref={object}
                 className={`${styles.sceneElement} ${objectSelected === element.id ? styles.selected : ''}`}
                 style={{
-                    width: size.width,
-                    height: size.height,
+                    width: element.width,
+                    height: element.height,
                     position: 'absolute',
                     top: 0,
                     left: 0,
-                    transform: `translate(${position.x}px, ${position.y}px)`,
+                    transform: `translate(${element.x}px, ${element.y}px)`,
                     zIndex: element.zIndex || 100,
                 }}
                 onClick={(e) => {

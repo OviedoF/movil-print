@@ -169,7 +169,6 @@ function Text({ design, setDesign, scene }) {
 export default function EditorElements({ active, setOptionsActive, optionsActive, template, design, setDesign, scene }) {
     const [menuOpen, setMenuOpen] = useState('elements')
     const { setTextForm } = useDataContext()
-    console.log('template', template)
 
     const toggleOptions = () => setOptionsActive(!optionsActive)
 
