@@ -1,3 +1,58 @@
+@font-face {
+  font-family: 'After Night';
+  src: url('/fonts/After Night.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Against Refresh';
+  src: url('/fonts/against refresh.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Amastery Hand';
+  src: url('/fonts/amastery hand.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Antonio Bold';
+  src: url('/fonts/Antonio-Bold_1.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Arizona Bold';
+  src: url('/fonts/arizonabold-bold-590fdea484087.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Artbrush';
+  src: url('/fonts/Artbrush.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Athletic';
+  src: url('/fonts/Athletic.TTF') format('truetype');
+}
+
+@font-face {
+  font-family: 'GROBOLD';
+  src: url('/fonts/GROBOLD.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'MJF Zhafira Demo';
+  src: url('/fonts/MJF_Zhafira_Demo.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Papa Gnome';
+  src: url('/fonts/PapaGnome.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Spicy Rice Regular';
+  src: url('/fonts/SpicyRice-Regular.ttf') format('truetype');
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

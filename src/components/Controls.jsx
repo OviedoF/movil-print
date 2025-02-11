@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Controls.module.scss';
 import { FaCopy, FaFile, FaPaste } from 'react-icons/fa';
 import { useSnackbar } from 'notistack';
@@ -105,6 +105,12 @@ export default function Controls({
             }
         });
     }
+
+    useEffect(() => {
+        if(design.name) {
+            handleSend();
+        }
+    }, [design.name]);
 
     return (
         <>
