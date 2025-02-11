@@ -176,6 +176,12 @@ export default function SceneTextElement({
                     e.stopPropagation();
                     setObjectSelected(element.id);
                 }}
+                onTouchStart={
+                    (e) => {
+                        e.stopPropagation();
+                        setObjectSelected(element.id);
+                    }
+                }
             >
                 <div
                     style={{

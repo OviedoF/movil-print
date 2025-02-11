@@ -102,7 +102,7 @@ function Text({ design, setDesign, scene }) {
     };
 
     return (
-        <form className={styles.text}>
+        <form className={styles.text} onSubmit={(e) => e.preventDefault()}>
             <textarea name="text" value={textForm.text} onChange={handleChange} placeholder='Escribe tu texto' style={{
                 fontSize: `${textForm.size}px`,
                 color: textForm.color,
