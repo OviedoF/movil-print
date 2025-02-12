@@ -19,7 +19,8 @@ export default function Editor() {
   const [objectSelected, setObjectSelected] = useState(null);
   const { templates } = useDataContext()
   const name = useParams().name;
-  const template = templates.find(template => template.name === name) || {};
+  const template = templates.find(template => template.name == name) || {};
+  console.log('template', template)
   const scene = useRef();
 
   return (

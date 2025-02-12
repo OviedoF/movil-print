@@ -72,9 +72,9 @@ const TemplateManager = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('name', currentTemplate.name);
-    formData.append('width', currentTemplate.width);
-    formData.append('height', currentTemplate.height);
+    formData.append('name', currentTemplate.name.trim());
+    formData.append('width', currentTemplate.width.trim());
+    formData.append('height', currentTemplate.height.trim());
     formData.append('background', images.background);
     images.elements.forEach((obj, index) => {
       formData.append(`elements`, obj);
