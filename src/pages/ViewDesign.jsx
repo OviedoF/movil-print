@@ -47,8 +47,6 @@ export default function ViewDesign() {
         `${styles.editor} ${!optionsActive && styles.full}`
       }>
 
-        <img src={template.background} alt={template.name} className={styles.background} />
-
         <div className={styles.scene} ref={scene} style={{
           width: `${template.width}cm`,
           height: `${template.height}cm`
