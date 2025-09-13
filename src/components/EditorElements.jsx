@@ -7,7 +7,8 @@ import { useDataContext } from '../context/data.context';
 
 const fonts = [
     'After Night', 'Against Refresh', 'Amastery Hand', 'Antonio Bold', 'Arizona Bold',
-    'Artbrush', 'Athletic', 'GROBOLD', 'MJF Zhafira Demo', 'Papa Gnome', 'Spicy Rice Regular'
+    'Artbrush', 'Athletic', 'GROBOLD', 'MJF Zhafira Demo', 'Papa Gnome', 'Spicy Rice Regular',
+    'Batuphat Script', 'Beach Sound', 'Capitaly Script', 'Circus', 'DeatheMaach'
 ];
 
 function Elements({ elements, design, setDesign, scene, objectKey }) {

@@ -53,6 +53,35 @@
   src: url('/fonts/SpicyRice-Regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: "Batuphat Script";
+  src: url('/fonts/Batuphat Script.otf') format('opentype');
+}
+
+
+@font-face {
+  font-family: "Capitaly Script";
+  src: url('/fonts/CapitalyScript.otf') format('opentype');
+}
+
+
+@font-face {
+  font-family: "Circus";
+  src: url('/fonts/Circus.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: "Beach Sound";
+  src: url('/fonts/BeachSound.otf') format('opentype');
+}
+
+
+@font-face {
+  font-family: "DeatheMaach";
+  src: url('/fonts/DeatheMaach.otf') format('opentype');
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -74,7 +103,9 @@
   padding: 0;
 }
 
-ul, ol, li {
+ul,
+ol,
+li {
   list-style: none;
   padding: 0;
 }
