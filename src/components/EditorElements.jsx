@@ -119,7 +119,17 @@ function Text({ design, setDesign, scene }) {
                         <label>Tamaño:</label>
                         <button type="button" onClick={() => setTextForm({ ...textForm, size: Math.max(1, textForm.size - 1) })}>-</button>
                         <input type="number" name="size" value={parseInt(textForm.size)} onChange={handleChange} />
-                        <button type="button" onClick={() => setTextForm({ ...textForm, size: textForm.size + 1 })}>+</button>
+                        <button
+  type="button"
+  onClick={() =>
+    setTextForm({
+      ...textForm,
+      size: Math.min(100, textForm.size + 1)
+    })
+  }
+>
+  +
+</button>
                     </li>
                 </ul>
 
